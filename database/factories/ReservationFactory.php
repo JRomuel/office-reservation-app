@@ -3,6 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
+use App\Models\Office;
+use App\Models\Reservation;
 
 class ReservationFactory extends Factory
 {

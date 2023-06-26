@@ -15,7 +15,9 @@ class CreateOfficesTable extends Migration
     {
         Schema::create('offices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->index();
+            $table->foreignId('user_id')->index()->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->string('title');
             $table->text('description');
             $table->decimal('lat', 11, 8);
@@ -32,8 +34,12 @@ class CreateOfficesTable extends Migration
 
 
         Schema::create('offices_tags', function (Blueprint $table){
-            $table->foreignId('office_id')->index();
-            $table->foreignId('tag_id')->index();
+            $table->foreignId('office_id')->index()->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreignId('tag_id')->index()->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->unique(['office_id', 'tag_id']);
 
         });
@@ -46,6 +52,7 @@ class CreateOfficesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('offices_tags');
         Schema::dropIfExists('offices');
     }
 }
